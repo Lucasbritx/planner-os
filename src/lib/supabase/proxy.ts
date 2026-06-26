@@ -67,12 +67,10 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const {
-    data: { claims },
-  } = await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
 
   const pathname = request.nextUrl.pathname;
-  const isAuthenticated = Boolean(claims);
+  const isAuthenticated = Boolean(data?.claims);
 
   if (!isAuthenticated && isPlannerPath(pathname)) {
     return NextResponse.redirect(buildLoginRedirect(request));
