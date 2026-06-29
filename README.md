@@ -40,6 +40,8 @@ O projeto já possui:
 - RLS por usuário em todas as tabelas públicas do planner.
 - Repository Supabase com mappers entre banco e modelo da UI.
 
+Guia detalhado: [`docs/supabase-migration-guide.md`](docs/supabase-migration-guide.md).
+
 Para aplicar o schema no projeto real:
 
 1. Abra o Supabase Dashboard do projeto.

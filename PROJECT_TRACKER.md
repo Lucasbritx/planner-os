@@ -61,6 +61,8 @@ MVP funcional com integração Supabase preparada no código. Falta aplicar a mi
 - [ ] Google OAuth configurado no provider externo
 - [ ] Seeds
 
+Guia de aplicação futura: `docs/supabase-migration-guide.md`.
+
 ### Google Calendar
 
 - [ ] OAuth
