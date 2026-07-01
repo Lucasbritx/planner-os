@@ -1,2 +1,9 @@
+export const dynamic = "force-dynamic";
+
 import { PlannerApp } from "@/components/planner-app";
-export default function Page(){return <PlannerApp page="review"/>}
+import { loadPlannerSnapshot } from "@/lib/planner/server";
+
+export default async function Page(){
+  const initialData = await loadPlannerSnapshot();
+  return <PlannerApp page="review" initialData={initialData}/>;
+}

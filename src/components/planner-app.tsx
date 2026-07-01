@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { PlannerProvider, usePlanner } from "@/lib/store";
 import { workoutSuggestions } from "@/lib/workout-suggestions";
-import type { Category, Status } from "@/lib/types";
+import type { Category, PlannerData, Status } from "@/lib/types";
 
 const nav = [
   ["/dashboard","Dashboard",LayoutDashboard],["/calendar","Calendário",CalendarDays],
@@ -29,8 +29,10 @@ function Modal({ title, onClose, children, onSave }:{title:string;onClose:()=>vo
 }
 function PageHeader({title,subtitle,onAdd,addLabel="Adicionar"}:{title:string;subtitle:string;onAdd?:()=>void;addLabel?:string}) {
   const {theme,setTheme}=useTheme();
-  const {data,updatePreferences}=usePlanner(); const [settingsOpen,setSettingsOpen]=useState(false);
+  const {data,updatePreferences,isSaving,error}=usePlanner(); const [settingsOpen,setSettingsOpen]=useState(false);
   return <div className="topbar"><div><h1>{title}</h1><div className="eyebrow">{subtitle}</div></div><div className="actions">
+    {isSaving&&<span className="badge">Salvando...</span>}
+    {error&&<span className="badge skipped">{error}</span>}
     <button className="btn week-control"><ChevronLeft size={15}/> 21–27 de junho <ChevronRight size={15}/></button>
     <button className="btn icon-btn" onClick={()=>setTheme(theme==="dark"?"light":"dark")}>{theme==="dark"?<Sun size={17}/>:<Moon size={17}/>}</button>
     <button className="btn icon-btn" aria-label="Preferências" onClick={()=>setSettingsOpen(true)}><Settings size={17}/></button>
@@ -122,6 +124,6 @@ function Section({title,children}:{title:string;children:React.ReactNode}){retur
 function Router({page}:{page:string}) {
  return page==="dashboard"?<Dashboard/>:page==="calendar"?<CalendarPage/>:page==="studies"?<Studies/>:page==="books"?<Books/>:page==="pocs"?<Pocs/>:page==="workouts"?<Workouts/>:<Review/>;
 }
-export function PlannerApp({page}:{page:string}) {
- return <PlannerProvider><Shell><Router page={page}/></Shell></PlannerProvider>;
+export function PlannerApp({page,initialData}:{page:string;initialData?:PlannerData}) {
+ return <PlannerProvider initialSnapshot={initialData}><Shell><Router page={page}/></Shell></PlannerProvider>;
 }
